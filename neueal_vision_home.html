@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<style>
+    body {
+        margin: 0px;
+        padding: 0px;
+        background-image: url('neural_vision_images/bg\ image.png');
+        background-repeat: repeat;
+        background-attachment: fixed;
+        background-size: 100% 100%;
+        height: 700px;
+    }
+
+    .header {
+        height: 90px;
+        position: fixed;
+        /* background-color: #201C3C; */
+    }
+
+    .left {
+        color: aliceblue;
+        font-size: 30px;
+        position: absolute;
+        left: 20px;
+        top: 30px;
+    }
+
+    .right {
+        position: absolute;
+        top: -10px;
+        left: 735px;
+    }
+
+    .navbar {
+        position: fixed;
+    }
+
+    .navbar ul {
+        overflow: auto;
+    }
+
+    .navbar li {
+        float: left;
+        list-style: none;
+        margin: 13px 20px;
+        font-size: 20px;
+
+    }
+
+    .navbar li a {
+        padding: 13px 13px;
+        text-decoration: none;
+        color: white;
+    }
+
+
+    .navbar li a:hover {
+        color: white;
+        background-color: #5A939E;
+        border-radius: 30px;
+    }
+
+    .dropbtn {
+        visibility: collapse;
+    }
+
+    #right1 {
+        position: absolute;
+        top: 20px;
+        left: 1355px;
+        /* border-radius: 30px; */
+        background-color: #5A939E;
+        color: #F4F4F4;
+        /* padding: 13px 13px; */
+        font-size: 20px;
+    }
+
+    #right1 a {
+        position: fixed;
+    }
+
+
+    #GSButton {
+        border: none;
+        border-radius: 30px;
+        padding: 13px 13px;
+        font-size: 15px;
+        text-decoration: none;
+        background-color: #5A939E;
+        cursor: pointer;
+    }
+
+    #main01 {
+        position: absolute;
+        top: 300px;
+        left: 250px;
+        font-size: 30px;
+        color: aliceblue;
+    }
+
+    #main02 {
+        border-left: 6px solid white;
+        height: 200px;
+        position: absolute;
+        top: 350px;
+        left: 250px;
+    }
+
+    #main03 {
+        position: absolute;
+        top: 360px;
+        left: 270px;
+        font-size: 50px;
+        color: aliceblue;
+    }
+
+    #main04 {
+        position: absolute;
+        top: 420px;
+        left: 275px;
+        font-size: 50px;
+        color: aliceblue;
+    }
+
+    #main05 {
+        position: absolute;
+        top: 480px;
+        left: 275px;
+        font-size: 50px;
+        color: #F2A14B;
+    }
+
+    #main06 {
+        position: absolute;
+        top: 480px;
+        left: 405px;
+        font-size: 50px;
+        color: aliceblue;
+    }
+
+    #main07 {
+        position: absolute;
+        top: 570px;
+        left: 250px;
+        /* border-radius: 30px; */
+        background-color: #5A939E;
+        color: #F4F4F4;
+        padding: 15px 15px;
+        font-size: 20px;
+    }
+
+    #GButton {
+        border: none;
+        text-decoration: none;
+        background-color: #5A939E;
+        cursor: pointer;
+        color: aliceblue;
+        font-size: 20px;
+    }
+
+    #main08 {
+        position: absolute;
+        top: 500px;
+        left: 1350px;
+    }
+
+    #main09 {
+        position: absolute;
+        top: 350px;
+        left: 1220px;
+    }
+
+    #main10 {
+        color: black;
+        position: absolute;
+        top: 370px;
+        left: 1255px;
+        font-size: 23px;
+    }
+</style>
+
+<body>
+    <div id="container">
+        <header>
+            <div class="header">
+                <div class="left">LegalEaseAI</div>
+            </div>
+
+            <div class="right">
+                <nav class="navbar">
+                    <ul>
+                        <div><button onclick="myFunction()" class="dropbtn" id="menubtn">Menu</button>
+                            <div id="myDropdown" class="dropdown-content">
+                                <!-- <li><a href="#" class="active"></a></li> -->
+                                <li><a href="#main1">Home</a></li>
+                                <li><a href="nueral_vision_index.html">Services</a></li>
+                                <li><a href="matrix_about_us.html">About Us</a></li>
+                                <li><a href="#main4">Contact Us</a></li>
+                            </div>
+                        </div>
+                    </ul>
+                </nav>
+            </div>
+
+            <div id="right1">
+                <a href="nueral_vision_index.html"><button id="GSButton">GET Started</button></a>
+            </div>
+        </header>
+        <main>
+            <div id="main01">We're Legal Consultant</div>
+            <div id="main02"></div>
+            <div id="main03">We Help You To</div>
+            <div id="main04">Manage Your</div>
+            <div id="main05">Legal </div>
+            <div id="main06">Matters </div>
+
+            <div id="main07">
+                <a href="nueral_vision_index.html"><button id="GButton">GET Started</button></a>
+            </div>
+
+            <div id="main08"><img src="neural_vision_images/chatbot-removebg-preview.png" alt="" height=200px></div>
+            <div id="main09"><img src="neural_vision_images/cbt_speak-removebg-preview.png" alt="" height=200px></div>
+            <div id="main10">&nbsp;Hello , I am <br>&nbsp;Abhishek. <br>&nbsp;How can I help<br>&nbsp; &nbsp; you?</div>
+
+        </main>
+        <footer></footer>
+    </div>
+</body>
+
+</html>

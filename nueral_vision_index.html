@@ -1,0 +1,372 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Convert Image to text</title>
+    <script src="https://cdn.jsdelivr.net/gh/naptha/tesseract.js@1.0.10/dist/tesseract.min.js"></script>
+</head>
+<style>
+    body {
+        background-image: linear-gradient(to bottom right, black, #5A939E)
+    }
+
+    .header {
+        height: 90px;
+        background-color: #201C3C;
+    }
+
+    .left {
+        color: aliceblue;
+        font-size: 30px;
+        position: absolute;
+        left: 20px;
+        top: 30px;
+    }
+
+    .right {
+        position: absolute;
+        top: -10px;
+        left: 735px;
+    }
+
+    .navbar ul {
+        overflow: auto;
+    }
+
+    .navbar li {
+        float: left;
+        list-style: none;
+        margin: 13px 20px;
+        font-size: 20px;
+
+    }
+
+    .navbar li a {
+        padding: 13px 13px;
+        text-decoration: none;
+        color: white;
+    }
+
+
+    .navbar li a:hover {
+        color: white;
+        background-color: #5A939E;
+        border-radius: 30px;
+    }
+
+    .dropbtn {
+        visibility: collapse;
+    }
+
+    #right1 {
+        position: absolute;
+        top: 20px;
+        left: 1355px;
+        border-radius: 30px;
+        background-color: #5A939E;
+        color: #F4F4F4;
+        padding: 13px 13px;
+        font-size: 20px;
+    }
+
+    #GSButton {
+        border: none;
+        text-decoration: none;
+        background-color: #5A939E;
+        cursor: pointer;
+    }
+
+    :root {
+        --gradient: linear-gradient(180deg, #0C041E -8.41%, #5A939E 98.85%);
+    }
+
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        font-family: sans-serif;
+    }
+
+    .app {
+        min-height: 100vh;
+        background: var(--gradient);
+        color: #fff;
+
+        display: flex;
+        flex-direction: column;
+        justify-content: space-evenly;
+        align-items: center;
+    }
+
+    .flex-between {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+    .upload-file {
+        width: 60vw;
+        height: 3rem;
+        background-color: #fff3;
+        border-radius: 4rem;
+        padding: 0 1.4rem;
+    }
+
+    .tooltip {
+        position: relative;
+    }
+
+    .tooltip img {
+        width: 1.8rem;
+        cursor: pointer;
+    }
+
+    .tooltip::before,
+    .tooltip::after {
+        color: #111;
+        position: absolute;
+        left: 50%;
+        transform: translate(-50%, -15px);
+        font-size: .9rem;
+
+        opacity: 0;
+        transition: .4s ease-in-out;
+    }
+
+    .tooltip::before {
+        content: "";
+        top: -2px;
+
+        width: 0;
+        height: 0;
+        border: .6rem solid transparent;
+        border-top-color: #eee;
+    }
+
+    .tooltip::after {
+        content: attr(title);
+        top: -44px;
+
+        background: #eee;
+        white-space: pre;
+
+        padding: .8rem 1rem;
+        border-radius: .4rem;
+    }
+
+    .tooltip:hover::before,
+    .tooltip:hover::after {
+        opacity: 1;
+        transform: translate(-50%, -8px);
+    }
+
+    .upload-file input#img-url {
+        width: 86%;
+        height: 100%;
+        background-color: transparent;
+        color: #fff;
+        font-size: 1rem;
+        border: none;
+        outline: none;
+    }
+
+    .result {
+        margin-top: 2rem;
+        width: 60vw;
+        height: 22rem;
+    }
+
+    .result #img-result,
+    .result textarea {
+        height: 100%;
+        border-radius: 1rem;
+    }
+
+    .result #img-result {
+        max-width: 55%;
+        max-height: 100%;
+        width: auto;
+        height: auto;
+    }
+
+    .result div {
+        position: relative;
+        width: 40%;
+        height: 100%;
+    }
+
+    .result div p {
+        position: absolute;
+        top: 1rem;
+        right: 1rem;
+        opacity: 0;
+    }
+
+    .result div:hover p {
+        opacity: 1;
+    }
+
+    .result textarea {
+        width: 100%;
+        padding: 1.5rem;
+        background-color: transparent;
+
+        color: #fff;
+        font: 500 1.2rem sans-serif;
+        border: 2px solid #5A939E;
+
+        resize: none;
+        outline: none;
+    }
+
+    .result textarea:focus {
+        border: 1px solid #fff;
+    }
+
+    .result .arrow {
+        width: 3rem;
+        height: 3rem;
+        margin: 0 1rem;
+    }
+
+    #main01 {
+        position: absolute;
+        top: 500px;
+        left: 1350px;
+    }
+
+    #main02 {
+        position: absolute;
+        top: 350px;
+        left: 1220px;
+    }
+
+    #main03 {
+        color: black;
+        position: absolute;
+        top: 370px;
+        left: 1255px;
+        font-size: 23px;
+    }
+</style>
+
+<body>
+    <div class="app">
+        <header>
+            <div class="header">
+                <div class="left">LegalEaseAI</div>
+            </div>
+
+            <div class="right">
+                <nav class="navbar">
+                    <ul>
+                        <div><button onclick="myFunction()" class="dropbtn" id="menubtn">Menu</button>
+                            <div id="myDropdown" class="dropdown-content">
+                                <!-- <li><a href="#" class="active"></a></li> -->
+                                <li><a href="neueal_vision_home.html">Home</a></li>
+                                <li><a href="nueral_vision_index.html">Services</a></li>
+                                <li><a href="matrix_about_us.html">About Us</a></li>
+                                <li><a href="#main4">Contact Us</a></li>
+                            </div>
+                        </div>
+                    </ul>
+                </nav>
+            </div>
+
+            <div id="right1">
+                <a href="nueral_vision_index.html"><button id="GSButton">GET Started</button></a>
+            </div>
+            <!-- <h1>Convert image to Editable Text</h1> -->
+        </header>
+        <main>
+            <section class="upload-file flex-between">
+                <p class="tooltip" title="Enter URL of image.">
+                    <img src="neural_vision_images/search.png" alt="">
+                </p>
+                <input type="text" placeholder="Enter URL of image" id="img-url">
+                <label>
+                    <p class="tooltip" title="Select any file.">
+                        <img src="neural_vision_images/upload.png" alt="">
+                    </p>
+                    <input type="file" hidden id="upload-file-btn">
+                </label>
+            </section>
+            <section class="result flex-between">
+                <img src="neural_vision_images/cam1.jpg" alt="" id="img-result">
+                <img src="neural_vision_images/arrow-right.png" alt="" class="arrow">
+                <div>
+                    <p class="tooltip" title="Copy text." id="copy-text">
+                        <img src="neural_vision_images/copy.png" alt="">
+                    </p>
+                    <textarea id="converted-text" placeholder="Converted text of image"></textarea>
+                </div>
+            </section>
+            <div id="main01"><img src="neural_vision_images/chatbot-removebg-preview.png" alt="" height=200px></div>
+            <div id="main02"><img src="neural_vision_images/cbt_speak-removebg-preview.png" alt="" height=200px></div>
+            <div id="main03">&nbsp;Hello , I am <br>&nbsp;Abhishek. <br>&nbsp;How can I help<br>&nbsp; &nbsp; you?</div>
+            <!-- <div id="main04">How can I help you? </div> -->
+        </main>
+        <footer></footer>
+    </div>
+    <script>
+
+        const img_url = document.querySelector('#img-url'),
+            upload_file_btn = document.querySelector('#upload-file-btn'),
+            copy_text = document.querySelector('#copy-text'),
+            img_result = document.querySelector('#img-result'),
+            converted_text = document.querySelector('#converted-text');
+
+
+        img_url.onclick = () => {
+            img_url.select();
+        }
+
+        copy_text.onclick = () => {
+            copy_text.setAttribute('title', "Copied.");
+            setTimeout(() => {
+                copy_text.setAttribute('title', "Copy text.");
+            }, 2000);
+
+            if (converted_text.value != '') {
+                navigator.clipboard.writeText(converted_text.value);
+            }
+        }
+
+        img_url.addEventListener('change', createFile);
+        upload_file_btn.addEventListener('change', displayImage);
+
+        async function createFile() {
+            if (this.value != '') {
+                img_result.src = this.value;
+
+                await fetch(this.value)
+                    .then(res => res.blob())
+                    .then(blob_file => {
+                        let file = new File([blob_file], blob_file.name, { type: blob_file.type });
+                        recognizeText(file);
+                    })
+
+            }
+        }
+
+        function displayImage() {
+            const reader = new FileReader();
+            reader.onload = () => {
+                img_result.src = reader.result;
+            }
+            reader.readAsDataURL(this.files[0]);
+            recognizeText(this.files[0]);
+        }
+
+        function recognizeText(file) {
+            Tesseract.recognize(file)
+                .then(result => {
+                    converted_text.value = result.text;
+                })
+        }
+    </script>
+</body>
+
+</html>
